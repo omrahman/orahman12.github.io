@@ -1,52 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
     <title>Selective Search for Object Recognition by orahman12</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
-
-    <header>
-      <div class="container">
+    <div class="wrapper">
+      <header>
         <h1>Selective Search for Object Recognition</h1>
-        <h2></h2>
+        <p>by Omar Rahman</p>
 
-        <section id="downloads">
-          <a href="https://github.com/orahman12" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
 
-    <div class="container">
-      <section id="main_content">
+        <p class="view"><a href="https://github.com/orahman12">View My GitHub Profile</a></p>
+
+      </header>
+      <section>
         <h3>
 <a id="summary" class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h3>
 
-<p>I am going to implement the selective search algorithm for object recognition as described in <a href="https://ivi.fnwi.uva.nl/isis/publications/2013/UijlingsIJCV2013/UijlingsIJCV2013.pdf">this paper.</a></p>
+<p>I am going to implement a parallel selective search algorithm for object recognition in images.</p>
 
 <h3>
 <a id="background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h3>
 
-<p>This is a test</p>
+<p>One major requirement of an object recognition system is a high quality set of object hypotheses that describe locations for potential objects to be recognized. <a href="https://ivi.fnwi.uva.nl/isis/publications/2013/UijlingsIJCV2013/UijlingsIJCV2013.pdf">This paper</a> suggests a bottom up, hierarchical approach to the problem by taking segments of an image and greedily combining neighboring segments using various diversification and similarity strategies. <a href="http://research.microsoft.com/pubs/220569/ZitnickDollarECCV14edgeBoxes.pdf">Another paper</a> proposes a method using "edge boxes", in which the number of contours wholly contained in an edge box indicates the likelihood that it contains an object.  </p>
 
 <h3>
 <a id="challenges" class="anchor" href="#challenges" aria-hidden="true"><span class="octicon octicon-link"></span></a>Challenges</h3>
 
+<p>The first challenge is to determine which method to employ, a decision which will likely be based largely on the amount of parallelism I can exploit from it.
+In hierarchical approach, there is potential for parallelism here since we can spatially decompose the problem by considering pairs of segments in parallel; however, this will likely not produce the exact same results as the sequential greedy algorithm. Thus, one challenge will be to determine whether this relaxation of the algorithm actually matters. </p>
+
 <h3>
 <a id="resources" class="anchor" href="#resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resources</h3>
 
+<p>Since image regions provide richer features than individual pixels, Uijlings et al. perform image segmentation using a fast method proposed in <a href="http://cs.brown.edu/%7Epff/papers/seg-ijcv.pdf">this paper</a>. Luckily, this paper provides a C++ implementation of their algorithm, which I hope to use as a starting point for my implementation of selective search.</p>
+
 <h3>
 <a id="goals-and-deliverables" class="anchor" href="#goals-and-deliverables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goals and Deliverables</h3>
-      </section>
-    </div>
 
+<p>I hope to complete a working implementation of selective search, which will, given an image, output an image with object proposals bound in boxes. I will first implement the sequential version as proposed in the paper and then implement a parallel version. I'll need some way to evaluate the parallel implementation, since its result will likely differ from the sequential version. Also, if time permits, I will attempt to speed up the image segmentation preprocessing step.</p>
+
+<h3>
+<a id="platform-choice" class="anchor" href="#platform-choice" aria-hidden="true"><span class="octicon octicon-link"></span></a>Platform Choice</h3>
+
+<p>I have not yet decided on what platform I will run on, maybe CUDA. I will have to think more carefully about the parallelism involved before committing to a platform.</p>
+
+<h3>
+<a id="proposed-schedule" class="anchor" href="#proposed-schedule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Proposed Schedule</h3>
+
+<p>4/2 - 4/9 : Study papers and implement sequential algorithm 
+4/9 - 4/16 (Checkpoint): Decide on platform and begin parallel implementation 
+4/16 - 4/23: Continue parallel implementation
+4/23 - 4/30: Finish parallel implementation and establish evaluation metrics
+4/30 - 5/7: Perform evaluations and complete final write up
+5/7 - 5/10: Buffer</p>
+      </section>
+      <footer>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
     
   </body>
 </html>
