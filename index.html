@@ -31,29 +31,37 @@
 <h3>
 <a id="background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h3>
 
-<p>Parsing is a fundamental component of many applications in natural language processing, including machine translation, semantic analysis, and information extraction. Since natural language is so vast and ambiguous, attempts at constructing a formal grammar result in hundreds of thousands of nonterminal rules and tens of thousands of terminal rules. The CKY algorithm is a dynamic programming algorithm that parses in a worst case complexity of $O(|G|n^3)$, where $|G|$ denotes the size of the grammar and $n$ denotes the length of the sentence.</p>
+<p>Parsing is a fundamental component of many applications in natural language processing, including machine translation, semantic analysis, and information extraction. Since natural language is so vast and ambiguous, attempts at constructing a formal grammar result in hundreds of thousands of nonterminal rules and tens of thousands of terminal rules. The CKY algorithm is a dynamic programming algorithm that parses in a worst case complexity of O(|G|n^3), where |G| denotes the size of the grammar and n denotes the length of the sentence. The size of the grammar dominates the computation, and so there is an opportunity for parallelism across either the grammar rules or symbols. For user-facing systems, real-time parsing is very desirable. The sequential algorithm, however, takes too long. Parallelizing the algorithm could help in achieving real-time parsing.</p>
 
 <h3>
 <a id="challenges" class="anchor" href="#challenges" aria-hidden="true"><span class="octicon octicon-link"></span></a>Challenges</h3>
 
+<p>Since CKY algorithm is a dynamic programming algorithm, there are many dependencies that would cause synchronization issues. Also, considering the layout of the data as the upper triangular portion of a square grid, making efficient use of the cache may prove to be difficult without modification of the data structures. The management and movement of data will also be challenging to do efficiently.</p>
+
 <h3>
 <a id="resources" class="anchor" href="#resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resources</h3>
+
+<p>I will be reimplementing some of the methods described in <a href="http://www.petrovi.de/data/iwpt11.pdf">this paper</a> and try to improve upon their results with my own ideas. I will extract a grammar and lexicon from the Berkeley parser.</p>
 
 <h3>
 <a id="goals-and-deliverables" class="anchor" href="#goals-and-deliverables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goals and Deliverables</h3>
 
+<p>I plan write from scratch a parallel parser that will at least match but preferably outperform the results from the aforementioned paper, which achieved a 26 fold speedup from a sequential C-implementation.</p>
+
 <h3>
 <a id="platform-choice" class="anchor" href="#platform-choice" aria-hidden="true"><span class="octicon octicon-link"></span></a>Platform Choice</h3>
+
+<p>CUDA</p>
 
 <h3>
 <a id="proposed-schedule" class="anchor" href="#proposed-schedule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Proposed Schedule</h3>
 
 <ul>
-<li>4/9 - 4/16 (Checkpoint): Implement baseline</li>
-<li>4/16 - 4/23: Continue parallel implementation</li>
-<li>4/23 - 4/30: Finish parallel implementation and establish evaluation metrics</li>
-<li>4/30 - 5/7: Perform evaluations and complete final write up</li>
-<li>5/7 - 5/10: Buffer</li>
+<li>4/9 - 4/16 (Checkpoint): Implement or find a sequential reference implementation and implement evaluation harness</li>
+<li>4/16 - 4/23: Write parallel implementation</li>
+<li>4/23 - 4/30: Finish parallel implementation and perform initial evaluations</li>
+<li>4/30 - 5/7: Performance tuning</li>
+<li>5/7 - 5/10: Writeup</li>
 </ul>
       </section>
       <footer>
